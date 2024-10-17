@@ -41,10 +41,10 @@ var app = (function () {
 
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/newpoint', function (eventbody) {
+            stompClient.subscribe('/topic/newpoint.' + topic , function (eventbody) {
                 var theObject=JSON.parse(eventbody.body);
                 addPointToCanvas(theObject);
-                alert(eventbody.body);
+                //alert(eventbody.body);
             });
         });
 
@@ -53,7 +53,7 @@ var app = (function () {
     var publishPoint = function(px,py){
        var pt=new Point(px,py);
        console.info("publishing point at "+pt);
-       return stompClient.send("/topic/newpoint", {}, JSON.stringify(pt));
+       return stompClient.send("/topic/newpoint." + topic, {}, JSON.stringify(pt));
     };
 
     const initCanvas = () => {
@@ -68,11 +68,17 @@ var app = (function () {
         }
     };
 
+    var topic = null;
+
+    var setTopic = function(topicToChange){
+        topic = topicToChange;
+        connectAndSubscribe();
+    };
+
     return {
 
         init: function () {
             initCanvas();
-            connectAndSubscribe();
         },
 
         publishPoint,
@@ -83,7 +89,9 @@ var app = (function () {
             }
             setConnected(false);
             console.log("Disconnected");
-        }
+        },
+
+        setTopic
     };
 
 })();
