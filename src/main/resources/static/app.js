@@ -16,10 +16,15 @@ var app = (function () {
         ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
         ctx.stroke();
     };
+
+    var scratchPoint = function (pointerType, canvas){
+        canvas.addEventListener(pointerType, function(event){
+            var points = getMousePosition(event, canvas);
+            addPointToCanvas(points);
+            })
+        };
     
-    
-    var getMousePosition = function (evt) {
-        canvas = document.getElementById("canvas");
+    var getMousePosition = function (evt, canvas) {
         var rect = canvas.getBoundingClientRect();
         return {
             x: evt.clientX - rect.left,
@@ -28,12 +33,12 @@ var app = (function () {
     };
 
 
+
     var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompendpoint');
         stompClient = Stomp.over(socket);
-        
-        //subscribe to /topic/TOPICXX when connections succeed
+
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newpoint', function (eventbody) {
@@ -45,15 +50,23 @@ var app = (function () {
         });
 
     };
-    
-    
+
+    const initCanvas = () => {
+        const c = document.getElementById("canvas");
+        if(window.PointerEvent) {
+            //addPointToCanvas(getMousePosition("pointerdown"));
+            scratchPoint("pointerdown", canvas);
+        }
+        else {
+            //addPointToCanvas(getMousePosition("mousedown"));
+            scratchPoint("mousedown", canvas);
+        }
+    };
 
     return {
 
         init: function () {
-            var can = document.getElementById("canvas");
-            
-            //websocket connection
+            initCanvas();
             connectAndSubscribe();
         },
 
