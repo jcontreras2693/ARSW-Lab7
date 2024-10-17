@@ -20,7 +20,7 @@ var app = (function () {
     var scratchPoint = function (pointerType, canvas){
         canvas.addEventListener(pointerType, function(event){
             var points = getMousePosition(event, canvas);
-            addPointToCanvas(points);
+            publishPoint(points.x, points.y);
             })
         };
     
@@ -45,10 +45,15 @@ var app = (function () {
                 var theObject=JSON.parse(eventbody.body);
                 addPointToCanvas(theObject);
                 alert(eventbody.body);
-
             });
         });
 
+    };
+
+    var publishPoint = function(px,py){
+       var pt=new Point(px,py);
+       console.info("publishing point at "+pt);
+       return stompClient.send("/topic/newpoint", {}, JSON.stringify(pt));
     };
 
     const initCanvas = () => {
@@ -70,12 +75,7 @@ var app = (function () {
             connectAndSubscribe();
         },
 
-        publishPoint: function(px,py){
-            var pt=new Point(px,py);
-            console.info("publishing point at "+pt);
-            //addPointToCanvas(pt);
-            return stompClient.send("/topic/newpoint", {}, JSON.stringify(pt));
-        },
+        publishPoint,
 
         disconnect: function () {
             if (stompClient !== null) {
