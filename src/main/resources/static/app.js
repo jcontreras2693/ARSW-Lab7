@@ -8,6 +8,7 @@ var app = (function () {
     }
     
     var stompClient = null;
+    var topic;
 
     var addPointToCanvas = function (point) {        
         var canvas = document.getElementById("canvas");
@@ -68,11 +69,17 @@ var app = (function () {
         }
     };
 
-    var topic = null;
-
     var setTopic = function(topicToChange){
         topic = topicToChange;
         connectAndSubscribe();
+        clearCanvas();
+    };
+
+    var clearCanvas = function(){
+        const c = document.getElementById("myCanvas");
+        const ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.beginPath();
     };
 
     return {
