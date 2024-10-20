@@ -33,8 +33,6 @@ var app = (function () {
         };
     };
 
-
-
     var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompendpoint');
@@ -54,17 +52,15 @@ var app = (function () {
     var publishPoint = function(px,py){
        var pt=new Point(px,py);
        console.info("publishing point at "+pt);
-       return stompClient.send("/topic/newpoint." + topic, {}, JSON.stringify(pt));
+       stompClient.send("/topic/newpoint." + topic, {}, JSON.stringify(pt));
     };
 
     const initCanvas = () => {
         const c = document.getElementById("canvas");
         if(window.PointerEvent) {
-            //addPointToCanvas(getMousePosition("pointerdown"));
             scratchPoint("pointerdown", canvas);
         }
         else {
-            //addPointToCanvas(getMousePosition("mousedown"));
             scratchPoint("mousedown", canvas);
         }
     };
@@ -89,6 +85,7 @@ var app = (function () {
         },
 
         publishPoint,
+        setTopic,
 
         disconnect: function () {
             if (stompClient !== null) {
@@ -96,9 +93,8 @@ var app = (function () {
             }
             setConnected(false);
             console.log("Disconnected");
-        },
+        }
 
-        setTopic
     };
 
 })();
