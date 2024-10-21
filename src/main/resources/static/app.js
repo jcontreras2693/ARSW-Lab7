@@ -91,13 +91,11 @@ var app = (function () {
         publishPoint,
 
         connect: function(topicToSet) {
-            disconnect();
+            if(connected) disconnect();
             topic = topicToSet;
             clearCanvas();
             connectAndSubscribe(topic);  
         },
-
-        disconnect
 
     };
 
