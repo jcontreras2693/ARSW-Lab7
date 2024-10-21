@@ -52,7 +52,7 @@ var app = (function () {
     var publishPoint = function(px,py){
        var pt=new Point(px,py);
        console.info("publishing point at "+pt);
-       return stompClient.send("/topic/newpoint." + topic, {}, JSON.stringify(pt));
+       return stompClient.send("/app/newpoint." + topic, {}, JSON.stringify(pt));
     };
 
     const initCanvas = () => {
