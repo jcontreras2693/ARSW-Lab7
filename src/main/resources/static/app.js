@@ -8,8 +8,8 @@ var app = (function () {
     }
     
     var stompClient = null;
-    var connected = false;
     var topic = 0;
+    var subscription = null;
 
     var addPointToCanvas = function (point) {        
         var canvas = document.getElementById("canvas");
@@ -34,23 +34,20 @@ var app = (function () {
         };
     };
 
-    var connectAndSubscribe = function (topic) {
+    var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompendpoint');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/newpoint.' + topic , function (eventbody) {
+            subscription = stompClient.subscribe('/topic/newpoint.' + topic , function (eventbody) {
                 var theObject=JSON.parse(eventbody.body);
                 addPointToCanvas(theObject);
-                connected = true;
                 //alert(eventbody.body);
             });
         });
-
     };
-
 
     var publishPoint = function(px,py){
        var pt=new Point(px,py);
@@ -74,13 +71,7 @@ var app = (function () {
         ctx.beginPath();
     };
 
-    var disconnect = function () {
-        if (stompClient !== null) {
-            stompClient.disconnect();
-            connected = false;
-            console.log("Disconnected");
-        }
-    };
+
 
     return {
 
@@ -91,12 +82,21 @@ var app = (function () {
         publishPoint,
 
         connect: function(topicToSet) {
-            disconnect();
+            if (subscription != null){
+                subscription.unsubscribe();
+            }
             topic = topicToSet;
             clearCanvas();
-            connectAndSubscribe(topic);  
+            connectAndSubscribe();
         },
 
+        disconnect: function () {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+            }
+            setConnected(false);
+            console.log("Disconnected");
+        }
     };
 
 })();
