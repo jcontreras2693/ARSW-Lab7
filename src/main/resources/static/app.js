@@ -77,9 +77,9 @@ var app = (function () {
     var disconnect = function () {
         if (stompClient !== null) {
             stompClient.disconnect();
+            connected = false;
+            console.log("Disconnected");
         }
-        connected = false;
-        console.log("Disconnected");
     };
 
     return {
@@ -91,7 +91,7 @@ var app = (function () {
         publishPoint,
 
         connect: function(topicToSet) {
-            if(connected) disconnect();
+            disconnect();
             topic = topicToSet;
             clearCanvas();
             connectAndSubscribe(topic);  
