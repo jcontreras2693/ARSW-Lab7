@@ -11,6 +11,7 @@ import edu.eci.arsw.collabpaint.model.Point;
 @Controller
 public class STOMPMessagesHandler {
 	
+	
 	@Autowired
 	SimpMessagingTemplate msgt;
     

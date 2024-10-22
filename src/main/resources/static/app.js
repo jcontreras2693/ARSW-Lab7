@@ -46,6 +46,7 @@ var app = (function () {
                 addPointToCanvas(theObject);
                 //alert(eventbody.body);
             });
+            
         });
     };
 
