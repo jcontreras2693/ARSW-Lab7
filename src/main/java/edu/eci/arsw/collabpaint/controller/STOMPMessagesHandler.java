@@ -31,6 +31,7 @@ public class STOMPMessagesHandler {
 
 		if(points.get(numdibujo).size() > 3){
 			msgt.convertAndSend("/topic/newpolygon."+numdibujo, points.get(numdibujo));
+			points.get(numdibujo).clear();
 		}
 	}
 }
