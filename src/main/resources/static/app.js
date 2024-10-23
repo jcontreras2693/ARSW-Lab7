@@ -26,13 +26,10 @@ var app = (function () {
         ctx.beginPath();
         ctx.moveTo(points[0].x, points[0].y);
         for(var i = 1; i < points.length;i++){
-            console.log("Point " + i + points[i].x, points[i].y + "\n" );
             ctx.lineTo(points[i].x, points[i].y);
         }
         ctx.closePath();
         ctx.fill();
-
-        console.log("deberia funcionar el dibujo");
     };
 
     var scratchPoint = function (pointerType, canvas){
@@ -64,7 +61,6 @@ var app = (function () {
             });
 
             subscription = stompClient.subscribe('/topic/newpolygon.' + topic , function (eventbody) {
-                console.log("LÓGICA FUNCIONA")
                 var theObject=JSON.parse(eventbody.body);
                 drawPolygon(theObject);
                 //alert(eventbody.body);*/

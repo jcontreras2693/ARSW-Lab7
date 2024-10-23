@@ -29,7 +29,7 @@ public class STOMPMessagesHandler {
 		points.get(numdibujo).add(pt);
 		msgt.convertAndSend("/topic/newpoint."+numdibujo, pt);
 
-		if(points.get(numdibujo).size() >= 3){
+		if(points.get(numdibujo).size() > 3){
 			msgt.convertAndSend("/topic/newpolygon."+numdibujo, points.get(numdibujo));
 		}
 	}
