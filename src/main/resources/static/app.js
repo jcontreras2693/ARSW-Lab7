@@ -19,6 +19,22 @@ var app = (function () {
         ctx.stroke();
     };
 
+    var drawPolygon = function (points){
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = '#f00';
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for(var i = 1; i < points.length;i++){
+            console.log("Point " + i + points[i].x, points[i].y + "\n" );
+            ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.closePath();
+        ctx.fill();
+
+        console.log("deberia funcionar el dibujo");
+    };
+
     var scratchPoint = function (pointerType, canvas){
         canvas.addEventListener(pointerType, function(event){
             var points = getMousePosition(event, canvas);
@@ -45,6 +61,13 @@ var app = (function () {
                 var theObject=JSON.parse(eventbody.body);
                 addPointToCanvas(theObject);
                 //alert(eventbody.body);
+            });
+
+            subscription = stompClient.subscribe('/topic/newpolygon.' + topic , function (eventbody) {
+                console.log("LÓGICA FUNCIONA")
+                var theObject=JSON.parse(eventbody.body);
+                drawPolygon(theObject);
+                //alert(eventbody.body);*/
             });
             
         });
