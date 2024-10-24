@@ -50,6 +50,8 @@ Para esto, realice lo siguiente:
 3. Compile y ejecute su aplicación. Abra la aplicación en varias pestañas diferentes (para evitar problemas con el caché del navegador, use el modo 'incógnito' en cada prueba).
 4. Ingrese los datos, ejecute la acción del botón, y verifique que en todas la pestañas se haya lanzado la alerta con los datos ingresados.
 
+![](img/src/parte1.4.png)
+
 5. Haga commit de lo realizado, para demarcar el avance de la parte 2.
 
 	```bash
@@ -63,6 +65,8 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
 
 1. Haga que el 'callback' asociado al tópico /topic/newpoint en lugar de mostrar una alerta, dibuje un punto en el canvas en las coordenadas enviadas con los eventos recibidos. Para esto puede [dibujar un círculo de radio 1](http://www.w3schools.com/html/html5_canvas.asp).
 4. Ejecute su aplicación en varios navegadores (y si puede en varios computadores, accediendo a la aplicación mendiante la IP donde corre el servidor). Compruebe que a medida que se dibuja un punto, el mismo es replicado en todas las instancias abiertas de la aplicación.
+
+![](img/src/parte2.2.png)
 
 5. Haga commit de lo realizado, para marcar el avance de la parte 2.
 
@@ -78,6 +82,8 @@ Ajuste la aplicación anterior para que pueda manejar más de un dibujo a la vez
 2. Modifique la aplicación para que, en lugar de conectarse y suscribirse automáticamente (en la función init()), lo haga a través de botón 'conectarse'. Éste, al oprimirse debe realizar la conexión y suscribir al cliente a un tópico que tenga un nombre dinámico, asociado el identificador ingresado, por ejemplo: /topic/newpoint.25, topic/newpoint.80, para los dibujos 25 y 80 respectivamente.
 3. De la misma manera, haga que las publicaciones se realicen al tópico asociado al identificador ingresado por el usuario.
 4. Rectifique que se puedan realizar dos dibujos de forma independiente, cada uno de éstos entre dos o más clientes.
+
+![](img/src/parte3.4.png)
 
 	```bash
 	git commit -m "PARTE 3".
