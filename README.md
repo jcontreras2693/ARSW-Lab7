@@ -123,17 +123,19 @@ Para ver cómo manejar esto desde el manejador de eventos STOMP del servidor, re
 
 	3. El cliente, ahora también se suscribirá al tópico '/topic/newpolygon'. El 'callback' asociado a la recepción de eventos en el mismo debe, con los datos recibidos, dibujar un polígono, [tal como se muestran en ese ejemplo](http://www.arungudelli.com/html5/html5-canvas-polygon/).
 	4. Verifique la funcionalidad: igual a la anterior, pero ahora dibujando polígonos cada vez que se agreguen cuatro puntos.
-	
+
+   ![](img/src/parte4.3.1.png)
+   ![](img/src/parte4.3.2.png)
 	
 5. A partir de los diagramas dados en el archivo ASTAH incluido, haga un nuevo diagrama de actividades correspondiente a lo realizado hasta este punto, teniendo en cuenta el detalle de que ahora se tendrán tópicos dinámicos para manejar diferentes dibujos simultáneamente.
 
-5. Haga commit de lo realizado.
+![](img/src/parte4.4.png)
+
+6. Haga commit de lo realizado.
 
 	```bash
 	git commit -m "PARTE FINAL".
 	```	
-
-
 
 ### Criterios de evaluación
 
@@ -142,3 +144,6 @@ Para ver cómo manejar esto desde el manejador de eventos STOMP del servidor, re
 3. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos.
 4. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos, con 2 o más dibujos simultáneamente.
 5. En la implementación se tuvo en cuenta la naturaleza concurrente del ejercicio. Por ejemplo, si se mantiene el conjunto de los puntos recibidos en una colección, la misma debería ser de tipo concurrente (thread-safe).
+
+
+### Milton Gutiérrez | Juan David Contreras
